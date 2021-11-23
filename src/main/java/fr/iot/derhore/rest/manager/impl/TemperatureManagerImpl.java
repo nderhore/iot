@@ -15,10 +15,10 @@ import java.util.Optional;
 @Component
 public class TemperatureManagerImpl implements TemperatureManager {
 
-    @Autowired
+
     private TemperatureRepository temperatureRepository;
 
-    @Autowired
+
     private TemperatureRepositoryCustom temperatureRepositoryCustom;
 
     @Override
