@@ -16,4 +16,6 @@ public interface TemperatureService {
     void deleteTemperature(String id);
 
     void updateTemperature(String id, Temperature temperature);
+
+    void createTemperature(Temperature temperature);
 }

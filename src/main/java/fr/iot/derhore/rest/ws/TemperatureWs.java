@@ -41,7 +41,12 @@ public class TemperatureWs {
     }
 
     @PutMapping(value = "/{id}")
-    public void updateTempreature(@PathVariable String id, @RequestBody Temperature temperature) {
+    public void updateTemperature(@PathVariable String id, @RequestBody Temperature temperature) {
         temperatureService.updateTemperature(id,temperature);
+    }
+
+    @PostMapping
+    public void createTemperature(@RequestBody Temperature temperature){
+        temperatureService.createTemperature(temperature);
     }
 }
