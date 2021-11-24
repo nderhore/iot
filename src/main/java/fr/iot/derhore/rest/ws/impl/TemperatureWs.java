@@ -1,10 +1,8 @@
 package fr.iot.derhore.rest.ws.impl;
 
-import fr.iot.derhore.rest.entity.Temperature;
+import fr.iot.derhore.rest.entity.IotObject;
 import fr.iot.derhore.rest.service.TemperatureService;
 import fr.iot.derhore.rest.ws.ApiRegistration;
-import org.eclipse.paho.client.mqttv3.IMqttClient;
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +18,12 @@ public class TemperatureWs {
     private TemperatureService temperatureService;
 
     @GetMapping
-    public List<Temperature> findTemperature() {
+    public List<IotObject> findTemperature() {
         return temperatureService.getAllTemperature();
     }
 
     @GetMapping(ApiRegistration.REST_FILTERED + "/{dateDebut}" + "/{dateFin}")
-    public List<Temperature> findFilteredTemperature(
+    public List<IotObject> findFilteredTemperature(
             @PathVariable(value="dateDebut")
             @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dateDebut,
             @PathVariable(value="dateFin")
@@ -34,7 +32,7 @@ public class TemperatureWs {
     }
 
     @GetMapping("/{id}")
-    public Temperature findTemperature(@PathVariable(name = "id") String id) {
+    public IotObject findTemperature(@PathVariable(name = "id") String id) {
         return temperatureService.getTemperature(id);
     }
 
@@ -44,12 +42,12 @@ public class TemperatureWs {
     }
 
     @PutMapping(value = "/{id}")
-    public void updateTemperature(@PathVariable String id, @RequestBody Temperature temperature) {
-        temperatureService.updateTemperature(id,temperature);
+    public void updateTemperature(@PathVariable String id, @RequestBody IotObject iotObject) {
+        temperatureService.updateTemperature(id, iotObject);
     }
 
     @PostMapping
-    public void createTemperature(@RequestBody Temperature temperature){
-        temperatureService.createTemperature(temperature);
+    public void createTemperature(@RequestBody IotObject iotObject){
+        temperatureService.createTemperature(iotObject);
     }
 }

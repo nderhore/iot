@@ -1,7 +1,9 @@
 package fr.iot.derhore.rest.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.iot.derhore.rest.entity.Temperature;
+import fr.iot.derhore.rest.entity.IotObject;
+import fr.iot.derhore.rest.enumIot.Type;
+import fr.iot.derhore.rest.manager.AmpouleManager;
 import fr.iot.derhore.rest.manager.TemperatureManager;
 import fr.iot.derhore.rest.singleton.MessageQueueSingleton;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -26,7 +28,7 @@ public class MQTTService implements MqttCallback {
     private String mqttIpAddress = "iot-derhore.cloud.shiftr.io";
     private boolean mqttHaveCredential = true;
     private String mqttPort = "1883";
-    private String mqttTopic = "appart/rdc/cuisine/four/temperature";
+    private String mqttTopic = "appart/rdc/cuisine/#";
     Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -37,6 +39,9 @@ public class MQTTService implements MqttCallback {
 
     @Autowired
     private MessageQueueSingleton messageQueueSingleton;
+
+    @Autowired
+    private AmpouleManager ampouleManager;
 
     @Override
     public void connectionLost(Throwable arg0) {
@@ -59,12 +64,16 @@ public class MQTTService implements MqttCallback {
         LOG.info("message Arrived !");
         try {
             messageQueueSingleton = MessageQueueSingleton.getInstance();
-            messageQueueSingleton.addElementInList(objectMapper.readValue(msg.toString(), Temperature.class));
-
-            if(messageQueueSingleton.getTemperatures().size() >= 10){
-                LOG.info("10 element !");
-                temperatureManager.createTemperatureWithAvg(messageQueueSingleton.getTemperatures());
-                messageQueueSingleton.resetList();
+            IotObject iotObject = objectMapper.readValue(msg.toString(), IotObject.class);
+            iotObject.setTopic(s);
+            if(iotObject.getType().equals(Type.TEMPERATURE)) {
+                messageQueueSingleton.addElementInList(iotObject);
+                if (messageQueueSingleton.getTemperatures().size() >= 10) {
+                    temperatureManager.createTemperatureWithAvg(messageQueueSingleton.getTemperatures());
+                    messageQueueSingleton.resetList();
+                }
+            } else{
+                ampouleManager.updateAmpouleByTopic(s,iotObject);
             }
         } catch (Exception e) {
             e.printStackTrace();
