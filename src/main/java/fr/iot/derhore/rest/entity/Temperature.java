@@ -6,14 +6,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+
 @Document(collection = "temperature")
 public class Temperature {
+
     @Id
     private ObjectId id;
 
-    private LocalDateTime date;
+    private LocalDateTime time;
 
-    private Long value;
+    private String topic;
+
+    private Double duree;
+
+    private Double value;
 
     public ObjectId getId() {
         return id;
@@ -23,19 +29,35 @@ public class Temperature {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
-    public Long getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Long value) {
+    public void setValue(Double value) {
         this.value = value;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public Double getDuree() {
+        return duree;
+    }
+
+    public void setDuree(Double duree) {
+        this.duree = duree;
     }
 }

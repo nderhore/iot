@@ -1,4 +1,4 @@
-package fr.iot.derhore.rest.pojo;
+package fr.iot.derhore.rest.dto;
 
 public class Message {
 
@@ -6,7 +6,6 @@ public class Message {
 
         private String message;
 
-        // private String protocal;
 
         public String getTopic() {
             return topic;
@@ -26,6 +25,6 @@ public class Message {
 
         @Override
         public String toString() {
-            return "MessageDTO [message=" + message + "]";
+            return "Message [message=" + message + "]";
         }
  }

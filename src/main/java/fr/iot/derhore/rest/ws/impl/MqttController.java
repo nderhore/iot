@@ -1,6 +1,6 @@
 package fr.iot.derhore.rest.ws.impl;
 
-import fr.iot.derhore.rest.pojo.Message;
+import fr.iot.derhore.rest.dto.Message;
 import fr.iot.derhore.rest.service.MQTTService;
 import fr.iot.derhore.rest.ws.ApiRegistration;
 import org.springframework.beans.factory.annotation.Autowired;

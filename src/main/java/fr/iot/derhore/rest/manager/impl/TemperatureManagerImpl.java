@@ -58,8 +58,10 @@ public class TemperatureManagerImpl implements TemperatureManager {
         Temperature oldTemperature = this.getTemperature(id);
 
         if(oldTemperature != null){
-            oldTemperature.setDate(temperature.getDate());
+            oldTemperature.setTime(temperature.getTime());
             oldTemperature.setValue(temperature.getValue());
+            oldTemperature.setDuree(temperature.getDuree());
+            oldTemperature.setTopic(temperature.getTopic());
             temperatureRepository.save(oldTemperature);
         }
     }
@@ -67,5 +69,27 @@ public class TemperatureManagerImpl implements TemperatureManager {
     @Override
     public void createTemperature(Temperature temperature) {
         temperatureRepository.save(temperature);
+    }
+
+    @Override
+    public void createTemperatureWithAvg(List<Temperature> temperatures) {
+        Temperature temperature = new Temperature();
+
+        if (!temperatures.isEmpty()) {
+            for (Temperature messageTemperature : temperatures) {
+                //Premiere valeur
+                if (temperature.getTime() == null) {
+                    temperature.setTime(messageTemperature.getTime());
+                    temperature.setValue(messageTemperature.getValue());
+                    temperature.setTopic(messageTemperature.getTopic());
+                    temperature.setDuree(messageTemperature.getDuree());
+                } else {
+                    //Autre valeur
+                    temperature.setValue((temperature.getValue() + messageTemperature.getValue())/2);
+                    temperature.setDuree((temperature.getDuree() + messageTemperature.getDuree())/2);
+                }
+            }
+            this.createTemperature(temperature);
+        }
     }
 }

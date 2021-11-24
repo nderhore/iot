@@ -3,6 +3,7 @@ package fr.iot.derhore.rest.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.iot.derhore.rest.entity.Temperature;
 import fr.iot.derhore.rest.manager.TemperatureManager;
+import fr.iot.derhore.rest.singleton.MessageQueueSingleton;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -34,6 +35,9 @@ public class MQTTService implements MqttCallback {
     @Autowired
     private TemperatureManager temperatureManager;
 
+    @Autowired
+    private MessageQueueSingleton messageQueueSingleton;
+
     @Override
     public void connectionLost(Throwable arg0) {
         LOG.info("connectionLost :" + arg0.getMessage()+" :"+arg0.toString());
@@ -54,8 +58,14 @@ public class MQTTService implements MqttCallback {
     public void messageArrived(String s, MqttMessage msg) throws Exception {
         LOG.info("message Arrived !");
         try {
-            Temperature temperature = objectMapper.readValue(msg.toString(), Temperature.class);
-            temperatureManager.createTemperature(temperature);
+            messageQueueSingleton = MessageQueueSingleton.getInstance();
+            messageQueueSingleton.addElementInList(objectMapper.readValue(msg.toString(), Temperature.class));
+
+            if(messageQueueSingleton.getTemperatures().size() >= 10){
+                LOG.info("10 element !");
+                temperatureManager.createTemperatureWithAvg(messageQueueSingleton.getTemperatures());
+                messageQueueSingleton.resetList();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

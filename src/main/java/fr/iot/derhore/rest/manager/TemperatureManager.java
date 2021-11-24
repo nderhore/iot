@@ -18,4 +18,6 @@ public interface TemperatureManager {
     void updateTemperature(String id, Temperature temperature);
 
     void createTemperature(Temperature temperature);
+
+    void createTemperatureWithAvg(List<Temperature> temperatures);
 }
