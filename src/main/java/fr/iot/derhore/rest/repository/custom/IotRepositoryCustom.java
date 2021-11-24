@@ -6,7 +6,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-public interface TemperatureRepositoryCustom {
+public interface IotRepositoryCustom {
 
     List<IotObject> findTemperatureBetweenTwoDate(LocalDateTime dateDebut, LocalDateTime dateFin);
+
+    void updateAmpouleByTopic(String topic, IotObject iotObject);
 }

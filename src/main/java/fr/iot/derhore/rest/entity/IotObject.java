@@ -1,13 +1,13 @@
 package fr.iot.derhore.rest.entity;
 
+import fr.iot.derhore.rest.enumIot.Action;
+import fr.iot.derhore.rest.enumIot.Type;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDateTime;
 
-
-@Document(collection = "temperature")
+@Document(collection = "iot")
 public class IotObject {
 
     @Id
@@ -20,6 +20,10 @@ public class IotObject {
     private Double duree;
 
     private Double value;
+
+    private Type type;
+
+    private Action state;
 
     public ObjectId getId() {
         return id;
@@ -59,5 +63,21 @@ public class IotObject {
 
     public void setDuree(Double duree) {
         this.duree = duree;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Action getState() {
+        return state;
+    }
+
+    public void setState(Action state) {
+        this.state = state;
     }
 }

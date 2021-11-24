@@ -9,4 +9,6 @@ public interface ApiRegistration {
     String REST_FILTERED = "/filtered";
 
     String REST_MQTT = "/MQTT";
+
+    String REST_AMPOULE = "/ampoule";
 }

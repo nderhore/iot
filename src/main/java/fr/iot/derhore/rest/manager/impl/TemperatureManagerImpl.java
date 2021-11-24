@@ -1,9 +1,10 @@
 package fr.iot.derhore.rest.manager.impl;
 
 import fr.iot.derhore.rest.entity.IotObject;
+import fr.iot.derhore.rest.enumIot.Type;
 import fr.iot.derhore.rest.manager.TemperatureManager;
-import fr.iot.derhore.rest.repository.TemperatureRepository;
-import fr.iot.derhore.rest.repository.custom.TemperatureRepositoryCustom;
+import fr.iot.derhore.rest.repository.IotRepository;
+import fr.iot.derhore.rest.repository.custom.IotRepositoryCustom;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,25 +17,25 @@ import java.util.Optional;
 public class TemperatureManagerImpl implements TemperatureManager {
 
     @Autowired
-    private TemperatureRepository temperatureRepository;
+    private IotRepository iotRepository;
 
     @Autowired
-    private TemperatureRepositoryCustom temperatureRepositoryCustom;
+    private IotRepositoryCustom iotRepositoryCustom;
 
     @Override
     public List<IotObject> getAllTemperature() {
-        return temperatureRepository.findAll();
+        return iotRepository.findAllByType(Type.TEMPERATURE);
     }
 
     @Override
     public List<IotObject> getFilteredTemperature(LocalDateTime dateDebut, LocalDateTime dateFin) {
-        return temperatureRepositoryCustom.findTemperatureBetweenTwoDate(dateDebut,dateFin);
+        return iotRepositoryCustom.findTemperatureBetweenTwoDate(dateDebut,dateFin);
     }
 
     @Override
     public IotObject getTemperature(String id) {
 
-        Optional<IotObject> temperatures = temperatureRepository.findById(new ObjectId(id));
+        Optional<IotObject> temperatures = iotRepository.findById(new ObjectId(id));
         IotObject iotObject = null;
 
         if(temperatures.isPresent()){
@@ -49,7 +50,7 @@ public class TemperatureManagerImpl implements TemperatureManager {
         IotObject iotObject = this.getTemperature(id);
 
         if(iotObject != null) {
-            temperatureRepository.delete(iotObject);
+            iotRepository.delete(iotObject);
         }
     }
 
@@ -62,13 +63,13 @@ public class TemperatureManagerImpl implements TemperatureManager {
             oldIotObject.setValue(iotObject.getValue());
             oldIotObject.setDuree(iotObject.getDuree());
             oldIotObject.setTopic(iotObject.getTopic());
-            temperatureRepository.save(oldIotObject);
+            iotRepository.save(oldIotObject);
         }
     }
 
     @Override
     public void createTemperature(IotObject iotObject) {
-        temperatureRepository.save(iotObject);
+        iotRepository.save(iotObject);
     }
 
     @Override
