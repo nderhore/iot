@@ -7,4 +7,6 @@ public interface ApiRegistration {
     String REST_TEMPERATURE = "/temperature";
 
     String REST_FILTERED = "/filtered";
+
+    String REST_MQTT = "/MQTT";
 }

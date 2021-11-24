@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Document(collection = "temperature")
 public class Temperature {
-
     @Id
     private ObjectId id;
 
