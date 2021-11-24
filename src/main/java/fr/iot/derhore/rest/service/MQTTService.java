@@ -1,7 +1,7 @@
 package fr.iot.derhore.rest.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.iot.derhore.rest.entity.Temperature;
+import fr.iot.derhore.rest.entity.IotObject;
 import fr.iot.derhore.rest.manager.TemperatureManager;
 import fr.iot.derhore.rest.singleton.MessageQueueSingleton;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -59,7 +59,7 @@ public class MQTTService implements MqttCallback {
         LOG.info("message Arrived !");
         try {
             messageQueueSingleton = MessageQueueSingleton.getInstance();
-            messageQueueSingleton.addElementInList(objectMapper.readValue(msg.toString(), Temperature.class));
+            messageQueueSingleton.addElementInList(objectMapper.readValue(msg.toString(), IotObject.class));
 
             if(messageQueueSingleton.getTemperatures().size() >= 10){
                 LOG.info("10 element !");

@@ -1,6 +1,6 @@
 package fr.iot.derhore.rest.singleton;
 
-import fr.iot.derhore.rest.entity.Temperature;
+import fr.iot.derhore.rest.entity.IotObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class MessageQueueSingleton {
 
     private static MessageQueueSingleton INSTANCE;
-    private List<Temperature> temperatures = new ArrayList<>();
+    private List<IotObject> iotObjects = new ArrayList<>();
 
 
     public static MessageQueueSingleton getInstance() {
@@ -22,19 +22,19 @@ public class MessageQueueSingleton {
         return INSTANCE;
     }
 
-    public void addElementInList(Temperature temperature){
-        this.temperatures.add(temperature);
+    public void addElementInList(IotObject iotObject){
+        this.iotObjects.add(iotObject);
     }
 
-    public List<Temperature> getTemperatures() {
-        return temperatures;
+    public List<IotObject> getTemperatures() {
+        return iotObjects;
     }
 
-    public void setTemperatures(List<Temperature> temperatures) {
-        this.temperatures = temperatures;
+    public void setTemperatures(List<IotObject> iotObjects) {
+        this.iotObjects = iotObjects;
     }
 
     public void resetList(){
-        this.temperatures.clear();
+        this.iotObjects.clear();
     }
 }

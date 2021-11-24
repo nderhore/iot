@@ -1,6 +1,6 @@
 package fr.iot.derhore.rest.manager.impl;
 
-import fr.iot.derhore.rest.entity.Temperature;
+import fr.iot.derhore.rest.entity.IotObject;
 import fr.iot.derhore.rest.manager.TemperatureManager;
 import fr.iot.derhore.rest.repository.TemperatureRepository;
 import fr.iot.derhore.rest.repository.custom.TemperatureRepositoryCustom;
@@ -22,74 +22,74 @@ public class TemperatureManagerImpl implements TemperatureManager {
     private TemperatureRepositoryCustom temperatureRepositoryCustom;
 
     @Override
-    public List<Temperature> getAllTemperature() {
+    public List<IotObject> getAllTemperature() {
         return temperatureRepository.findAll();
     }
 
     @Override
-    public List<Temperature> getFilteredTemperature(LocalDateTime dateDebut, LocalDateTime dateFin) {
+    public List<IotObject> getFilteredTemperature(LocalDateTime dateDebut, LocalDateTime dateFin) {
         return temperatureRepositoryCustom.findTemperatureBetweenTwoDate(dateDebut,dateFin);
     }
 
     @Override
-    public Temperature getTemperature(String id) {
+    public IotObject getTemperature(String id) {
 
-        Optional<Temperature> temperatures = temperatureRepository.findById(new ObjectId(id));
-        Temperature temperature = null;
+        Optional<IotObject> temperatures = temperatureRepository.findById(new ObjectId(id));
+        IotObject iotObject = null;
 
         if(temperatures.isPresent()){
-            temperature = temperatures.get();
+            iotObject = temperatures.get();
         }
 
-        return temperature;
+        return iotObject;
     }
 
     @Override
     public void deleteTemperature(String id) {
-        Temperature temperature = this.getTemperature(id);
+        IotObject iotObject = this.getTemperature(id);
 
-        if(temperature != null) {
-            temperatureRepository.delete(temperature);
+        if(iotObject != null) {
+            temperatureRepository.delete(iotObject);
         }
     }
 
     @Override
-    public void updateTemperature(String id, Temperature temperature) {
-        Temperature oldTemperature = this.getTemperature(id);
+    public void updateTemperature(String id, IotObject iotObject) {
+        IotObject oldIotObject = this.getTemperature(id);
 
-        if(oldTemperature != null){
-            oldTemperature.setTime(temperature.getTime());
-            oldTemperature.setValue(temperature.getValue());
-            oldTemperature.setDuree(temperature.getDuree());
-            oldTemperature.setTopic(temperature.getTopic());
-            temperatureRepository.save(oldTemperature);
+        if(oldIotObject != null){
+            oldIotObject.setTime(iotObject.getTime());
+            oldIotObject.setValue(iotObject.getValue());
+            oldIotObject.setDuree(iotObject.getDuree());
+            oldIotObject.setTopic(iotObject.getTopic());
+            temperatureRepository.save(oldIotObject);
         }
     }
 
     @Override
-    public void createTemperature(Temperature temperature) {
-        temperatureRepository.save(temperature);
+    public void createTemperature(IotObject iotObject) {
+        temperatureRepository.save(iotObject);
     }
 
     @Override
-    public void createTemperatureWithAvg(List<Temperature> temperatures) {
-        Temperature temperature = new Temperature();
+    public void createTemperatureWithAvg(List<IotObject> iotObjects) {
+        IotObject iotObject = new IotObject();
 
-        if (!temperatures.isEmpty()) {
-            for (Temperature messageTemperature : temperatures) {
+        if (!iotObjects.isEmpty()) {
+            for (IotObject messageIotObject : iotObjects) {
                 //Premiere valeur
-                if (temperature.getTime() == null) {
-                    temperature.setTime(messageTemperature.getTime());
-                    temperature.setValue(messageTemperature.getValue());
-                    temperature.setTopic(messageTemperature.getTopic());
-                    temperature.setDuree(messageTemperature.getDuree());
+                if (iotObject.getTime() == null) {
+                    iotObject.setTime(messageIotObject.getTime());
+                    iotObject.setValue(messageIotObject.getValue());
+                    iotObject.setTopic(messageIotObject.getTopic());
+                    iotObject.setDuree(messageIotObject.getDuree());
                 } else {
                     //Autre valeur
-                    temperature.setValue((temperature.getValue() + messageTemperature.getValue())/2);
-                    temperature.setDuree((temperature.getDuree() + messageTemperature.getDuree())/2);
+                    iotObject.setValue((iotObject.getValue() + messageIotObject.getValue())/2);
+                    iotObject.setDuree((iotObject.getDuree() + messageIotObject.getDuree())/2);
                 }
             }
-            this.createTemperature(temperature);
+            this.createTemperature(iotObject);
         }
     }
 }

@@ -1,6 +1,6 @@
 package fr.iot.derhore.rest.repository.custom.impl;
 
-import fr.iot.derhore.rest.entity.Temperature;
+import fr.iot.derhore.rest.entity.IotObject;
 import fr.iot.derhore.rest.repository.custom.TemperatureRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -18,11 +18,11 @@ public class TemperatureRepositoryCustomImpl implements TemperatureRepositoryCus
     private MongoTemplate mongoTemplate;
 
     @Override
-    public List<Temperature> findTemperatureBetweenTwoDate(LocalDateTime dateDebut, LocalDateTime dateFin) {
+    public List<IotObject> findTemperatureBetweenTwoDate(LocalDateTime dateDebut, LocalDateTime dateFin) {
         Query query = new Query();
 
         query.addCriteria(Criteria.where("dateValue").gte(dateDebut.toString()).and("dateValue").lt(dateFin.toString()));
 
-        return mongoTemplate.find(query,Temperature.class);
+        return mongoTemplate.find(query, IotObject.class);
     }
 }

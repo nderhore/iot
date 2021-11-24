@@ -1,23 +1,23 @@
 package fr.iot.derhore.rest.manager;
 
-import fr.iot.derhore.rest.entity.Temperature;
+import fr.iot.derhore.rest.entity.IotObject;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TemperatureManager {
 
-    List<Temperature> getAllTemperature();
+    List<IotObject> getAllTemperature();
 
-    List<Temperature> getFilteredTemperature(LocalDateTime dateDebut, LocalDateTime dateFin);
+    List<IotObject> getFilteredTemperature(LocalDateTime dateDebut, LocalDateTime dateFin);
 
-    Temperature getTemperature(String id);
+    IotObject getTemperature(String id);
 
     void deleteTemperature(String id);
 
-    void updateTemperature(String id, Temperature temperature);
+    void updateTemperature(String id, IotObject iotObject);
 
-    void createTemperature(Temperature temperature);
+    void createTemperature(IotObject iotObject);
 
-    void createTemperatureWithAvg(List<Temperature> temperatures);
+    void createTemperatureWithAvg(List<IotObject> iotObjects);
 }

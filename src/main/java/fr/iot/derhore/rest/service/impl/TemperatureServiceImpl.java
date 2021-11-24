@@ -1,6 +1,6 @@
 package fr.iot.derhore.rest.service.impl;
 
-import fr.iot.derhore.rest.entity.Temperature;
+import fr.iot.derhore.rest.entity.IotObject;
 import fr.iot.derhore.rest.manager.TemperatureManager;
 import fr.iot.derhore.rest.service.TemperatureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +16,17 @@ public class TemperatureServiceImpl implements TemperatureService {
     private TemperatureManager temperatureManager;
 
     @Override
-    public List<Temperature> getAllTemperature() {
+    public List<IotObject> getAllTemperature() {
         return temperatureManager.getAllTemperature();
     }
 
     @Override
-    public List<Temperature> getFilteredTemperature(LocalDateTime dateDebut, LocalDateTime dateFin) {
+    public List<IotObject> getFilteredTemperature(LocalDateTime dateDebut, LocalDateTime dateFin) {
         return temperatureManager.getFilteredTemperature(dateDebut,dateFin);
     }
 
     @Override
-    public Temperature getTemperature(String id) {
+    public IotObject getTemperature(String id) {
         return temperatureManager.getTemperature(id);
     }
 
@@ -36,12 +36,12 @@ public class TemperatureServiceImpl implements TemperatureService {
     }
 
     @Override
-    public void updateTemperature(String id, Temperature temperature) {
-        temperatureManager.updateTemperature(id,temperature);
+    public void updateTemperature(String id, IotObject iotObject) {
+        temperatureManager.updateTemperature(id, iotObject);
     }
 
     @Override
-    public void createTemperature(Temperature temperature) {
-        temperatureManager.createTemperature(temperature);
+    public void createTemperature(IotObject iotObject) {
+        temperatureManager.createTemperature(iotObject);
     }
 }

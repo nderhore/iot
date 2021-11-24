@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 
 @Document(collection = "temperature")
-public class Temperature {
+public class IotObject {
 
     @Id
     private ObjectId id;
