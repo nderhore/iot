@@ -1,7 +1,10 @@
-package fr.iot.derhore.rest.ws;
+package fr.iot.derhore.rest.ws.impl;
 
 import fr.iot.derhore.rest.entity.Temperature;
 import fr.iot.derhore.rest.service.TemperatureService;
+import fr.iot.derhore.rest.ws.ApiRegistration;
+import org.eclipse.paho.client.mqttv3.IMqttClient;
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
