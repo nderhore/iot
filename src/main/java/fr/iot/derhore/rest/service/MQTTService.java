@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 public class MQTTService implements MqttCallback {
 
     private MqttClient client = null;
-    private String mqttUserName = "iot-derhore", mqttPassword = "2y10rMY77U3FWqY19UbfMo43";
-    private String mqttIpAddress = "iot-derhore.cloud.shiftr.io";
+    private String mqttUserName = "trueiot", mqttPassword = "2y10rMY77U3FWqY19UbfMo43";
+    private String mqttIpAddress = "trueiot.cloud.shiftr.io";
     private boolean mqttHaveCredential = true;
     private String mqttPort = "1883";
     private String mqttTopic = "appart/rdc/cuisine/#";
