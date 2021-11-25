@@ -24,7 +24,7 @@ public class AmpouleManagerImpl implements AmpouleManager {
 
     @Override
     public List<IotObject> getAllAmpoule() {
-        return iotRepository.findAllByType(Type.AMPOULE);
+        return iotRepository.findAll();
     }
 
     @Override
