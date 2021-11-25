@@ -23,6 +23,10 @@ public class IotObject {
 
     private Type type;
 
+    private Double maxValue;
+
+    private Double minValue;
+
     private Action state;
 
     public ObjectId getId() {
@@ -79,5 +83,21 @@ public class IotObject {
 
     public void setState(Action state) {
         this.state = state;
+    }
+
+    public Double getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(Double maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public Double getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(Double minValue) {
+        this.minValue = minValue;
     }
 }

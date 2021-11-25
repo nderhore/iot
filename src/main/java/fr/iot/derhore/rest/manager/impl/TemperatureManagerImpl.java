@@ -84,10 +84,20 @@ public class TemperatureManagerImpl implements TemperatureManager {
                     iotObject.setValue(messageIotObject.getValue());
                     iotObject.setTopic(messageIotObject.getTopic());
                     iotObject.setDuree(messageIotObject.getDuree());
+                    iotObject.setMaxValue(messageIotObject.getValue());
+                    iotObject.setMinValue(messageIotObject.getValue());
                 } else {
                     //Autre valeur
                     iotObject.setValue((iotObject.getValue() + messageIotObject.getValue())/2);
                     iotObject.setDuree((iotObject.getDuree() + messageIotObject.getDuree())/2);
+
+                    //Calculate max and min
+                    if(iotObject.getMinValue() > messageIotObject.getValue()){
+                        iotObject.setMinValue(messageIotObject.getValue());
+                    }
+                    if(iotObject.getMaxValue() < messageIotObject.getValue()){
+                        iotObject.setMaxValue(messageIotObject.getValue());
+                    }
                 }
             }
             this.createTemperature(iotObject);
