@@ -24,7 +24,7 @@ public class TemperatureManagerImpl implements TemperatureManager {
 
     @Override
     public List<IotObject> getAllTemperature() {
-        return iotRepository.findAllByType(Type.TEMPERATURE);
+        return iotRepository.findAll();
     }
 
     @Override
